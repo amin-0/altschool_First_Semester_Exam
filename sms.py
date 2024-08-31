@@ -1,5 +1,8 @@
 
 class Person:
+    """
+    A class to represent a person having attributes of a name and id_number
+    """
     def __init__(self, name: str, id_number: str) -> None:
         self.name = name
         self.id_number = id_number
@@ -8,9 +11,13 @@ class Person:
         return f"name: {self.name}, id_number: {self.id_number}"
 
 class Student(Person):
+    """
+    A class to represent a student, who is a person with an extra attribute of major
+    """
     def __init__(self, name: str, id_number:str, major:str) -> None:
         super().__init__(name, id_number)
         self.major = major
+        
 
     def __str__(self) -> str:
         return f"name: {self.name}, id_number: {self.id_number}, major: {self.major}"
@@ -18,7 +25,10 @@ class Student(Person):
         return f"name: {self.name}, id_number: {self.id_number}, major: {self.major}"
 
 class Instructor(Person):
-    def __init__(self, name:str, id_number:int, department:str) -> None:
+    """
+    A class to represent an instructor, who is a person with an extra attribute of department
+    """
+    def __init__(self, name:str, id_number:str, department:str) -> None:
         super().__init__(name, id_number)
         self.department = department
     
@@ -28,10 +38,13 @@ class Instructor(Person):
         return f"name: {self.name}, id_number: {self.id_number}, department: {self.department}"
 
 class Course:
-    def __init__(self, course_name:str, course_id:int, enrolled_students:list[Student] = []) -> None:
+    """
+    A class to represent a course, having attributes of course_name, course_id and a list of enrolled students
+    """
+    def __init__(self, course_name:str, course_id:str) -> None:
         self.course_name = course_name
         self.course_id = course_id
-        self.enrolled_students = enrolled_students
+        self.enrolled_students : list[Student] = []
     
     def add_student(self, student: Student) -> list[Student]:
         if student not in self.enrolled_students:
@@ -47,6 +60,9 @@ class Course:
         return f"course name: {self.course_name}, course_id: {self.course_id}"
 
 class Enrollment:
+    """
+    A class to represent a enrollments of a Student in a course and the grade assigned to the student
+    """
     def __init__(self, student: Student, course: Course, grade:int = None) -> None:
         self.student = student
         self.course = course
@@ -61,6 +77,9 @@ class Enrollment:
         return f"name: {self.student.name} is enrolled in {self.course.course_name} and has a grade of {self.grade}"
 
 class StudentManagementSystem:
+    """
+    A class to represent a Student Management System, that allows 
+    """
     def __init__(self) -> None:
         self.students: list[Student] = []
         self.courses: list[Course] = []
@@ -68,7 +87,7 @@ class StudentManagementSystem:
         self.enrollments: list[Enrollment] = []
     
     def __str__(self) -> str:
-        return f"This is a student management system"
+        return f"This is a student management system that allows you to perform many functions related to managing students"
     
     def add_student(self, student : Student):
         self.students.append(student)
@@ -122,9 +141,11 @@ class StudentManagementSystem:
     def enroll_student_in_course(self, student_id: str, course_id: str):
         print("Attempting enrollment")
         student_list = [student for student in self.students if student.id_number == student_id]
+        
         student = student_list[0] if student_list else None
 
         course_list = [course for course in self.courses if course.course_id == course_id]
+
         course = course_list[0] if course_list else None
 
         if student and course:
@@ -151,10 +172,11 @@ class StudentManagementSystem:
     def retrieve_student_in_course(self, course_id: str ):
         course_list = [course for course in self.courses if course.course_id == course_id]
         course = course_list[0] if course_list else None
+        
         if course:
             return [student.name for student in course.enrolled_students]
     
-    def retrieve_courses_for_student(self, student_id, str):
+    def retrieve_courses_for_student(self, student_id: str):
         student_list = [student for student in self.students if student.id_number == student_id]
         student = student_list[0] if student_list else None
 
